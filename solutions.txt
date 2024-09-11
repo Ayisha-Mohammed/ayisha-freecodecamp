@@ -1,0 +1,159 @@
+1.Connect to Database postgresql
+
+   psql --username=freecodecamp --dbname=postgres;
+
+2. Create Database 
+
+   CREATE DATABASE universe;
+
+3.Connect to the database youve created
+
+   \c universe
+
+4. Create tables as required conditions
+
+
+   CREATE TABLE galaxy(
+      galaxy_id SERIAL NOT NULL,
+      star_id INTEGER  NOT NULL,
+      name VARCHAR(20) UNIQUE NOT NULL,
+      age INTEGER,
+      light_years NUMERIC,
+      color TEXT,
+      galaxy_exist BOOLEAN,
+      has_water BOOLEAN
+      );
+
+
+  CREATE TABLE star(
+    star_id SERIAL NOT NULL,
+    galaxy_id INTEGER NOT NULL,
+    planet_id INTEGER NOT NULL,
+    name VARCHAR(20)UNIQUE NOT NULL,
+    age INTEGER,
+    light_years NUMERIC,
+    color TEXT,
+    star_exist BOOLEAN
+    );
+
+
+  CREATE TABLE planet(
+    planet_id SERIAL NOT NULL,
+    star_id INTEGER  NOT NULL,
+    moon_id INTEGER  NOT NULL,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    age INTEGER,moons_count NUMERIC,
+    color TEXT,planet_exist BOOLEAN,
+    has_water BOOLEAN);
+
+
+  CREATE TABLE moon( 
+    moon_id SERIAL NOT NULL,
+    planet_id INTEGER NOT NULL,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    age INTEGER,volume NUMERIC,
+    color TEXT,moon_exist BOOLEAN,
+    has_water BOOLEAN
+    );
+
+
+  CREATE TABLE more_info(
+    more_info_id SERIAL NOT NULL,
+    name VARCHAR(20) UNIQUE NOT NULL,
+    description TEXT
+    );
+
+
+
+5.Fill the tables with Values
+
+INSERT INTO galaxy VALUES 
+(1, 1, 'galaxy1', 400,  16560.75, 'solid', true, true),
+(2, 2, 'galaxy2', 400,16560.75, 'solid', true, true),
+(3, 3, 'galaxy3', 400, 16560.75, 'solid', true, true),
+(4, 4, 'galaxy4', 400, 16560.75, 'solid', true, true),
+(5, 5, 'galaxy5', 400,16560.75 , 'solid', true, true),
+(6, 6, 'galaxy6', 400,16560.75 , 'solid', true, true);
+
+
+
+INSERT INTO star VALUES
+(1, 1, 1, 'star1', 800,  17700.75, 'blue',  true),
+(2, 2, 2, 'star2', 800,  17700.75, 'red',  true),
+(3, 3, 3, 'star3', 800,  17700.75, 'green', true),
+(4, 4, 4, 'star4', 800, 17700.75, 'orange', true),
+(5, 5, 5, 'star5', 800,  17700.75, 'yellow', true),
+(6, 6, 6, 'star6', 800,  17700.75, 'white',  true);
+
+
+
+INSERT INTO planet VALUES
+(1,  1,  1, 'planet1', 500, 1, 'solid', true, true),
+(2,  2,  2, 'planet2', 500,2 , 'solid', true, true),
+(3,  3,  3, 'planet3', 500, 2, 'solid', true, true),
+(4,  4,  4, 'planet4', 500,4 , 'solid', true, true),
+(5,  5,  5, 'planet5', 500, 3, 'solid', true, true),
+(6,  6,  6, 'planet6', 500, 6, 'solid', true, true),
+(7,  6,  7, 'planet7', 500, 3, 'solid', true, true),
+(8,  6,  8, 'planet8', 500, 2, 'solid', true, true),
+(9,  6,  9, 'planet9', 500, 4, 'solid', true, true),
+(10, 6, 10, 'planet10', 500,5 , 'solid', true, true),
+(11, 6, 11, 'planet11', 500, 7, 'solid', true, true),
+(12, 6, 12, 'planet12', 500, 6, 'solid', true, true);
+
+
+
+INSERT INTO moon VALUES 
+(1,   1, 'moon1', 400,  1500.75, 'solid', true, true),
+(2,   2, 'moon2', 400,  1500.75, 'solid', true, true),
+(3,   3, 'moon3', 400,  1500.75, 'solid', true, true),
+(4,   4, 'moon4', 400, 1500.75, 'solid', true, true),
+(5,   5, 'moon5', 400,  1500.75, 'solid', true, true),
+(6,   6, 'moon6', 400,  1500.75, 'solid', true, true),
+(7,   7, 'moon7', 400,  1500.75, 'solid', true, true),
+(8,   8, 'moon8', 400,  1500.75, 'solid', true, true),
+(9,   9, 'moon9', 400,  1500.75, 'solid', true, true),
+(10, 10, 'moon10', 400,  1500.75, 'solid', true, true),
+(11, 11, 'moon11', 400,  1500.75, 'solid', true, true),
+(12, 11, 'moon12', 400, 1500.75, 'solid', true, true),
+(13, 11, 'moon13', 400,  1500.75, 'solid', true, true),
+(14, 11, 'moon14', 400, 1500.75, 'solid', true, true),
+(15, 11, 'moon15', 400, 1500.75, 'solid', true, true),
+(16, 11, 'moon16', 500, 1500.75, 'solid', true, true),
+(17, 11, 'moon17', 500, 1500.75, 'solid', true, true),
+(18, 11, 'moon18', 500, 1500.75, 'solid', true, true),
+(19, 11, 'moon19', 500,  1500.75, 'solid', true, true),
+(20, 11, 'moon20', 500,  1500.75, 'solid', true, true);
+
+
+
+INSERT INTO more_info VALUES
+(1,  'info1', 'text'),(2,  'info2', 'text'),
+(3, 'info3', 'text'),(4,'info4', 'text'),
+(5,  'info5', 'text');
+
+
+
+
+6. Primary Key and Foreign Key assignment
+
+ALTER TABLE galaxy ADD PRIMARY KEY (galaxy_id)
+ALTER TABLE star ADD PRIMARY KEY (star_id)
+ALTER TABLE planet ADD PRIMARY KEY (planet_id)
+ALTER TABLE moon ADD PRIMARY KEY (moon_id)
+ALTER TABLE more_info ADD PRIMARY KEY (more_info_id)
+
+ALTER TABLE galaxy ADD FOREIGN KEY (star_id)   REFERENCES star   (star_id)
+ALTER TABLE star   ADD FOREIGN KEY (galaxy_id) REFERENCES galaxy (galaxy_id)
+ALTER TABLE star   ADD FOREIGN KEY (planet_id) REFERENCES planet (planet_id)
+ALTER TABLE planet ADD FOREIGN KEY (star_id)   REFERENCES star   (star_id)
+ALTER TABLE planet ADD FOREIGN KEY (moon_id)   REFERENCES moon   (moon_id)
+ALTER TABLE moon   ADD FOREIGN KEY (planet_id) REFERENCES planet (planet_id)
+
+
+ 
+7. save sql db queries into universe.sql file
+
+   pg_dump -cC --inserts -U freecodecamp universe > universe.sql
+
+   #note:dont type this command in psql . just do it in your project folder.
